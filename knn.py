@@ -23,21 +23,21 @@ def knn_predict(X_train, y_train, k, data):
     count_label = {}
     labels = set(y_train)
 
-    for train, label in zip(X_train,y_train):
+    for train, label in zip(X_train,y_train):# 임의 데이터와 모든 데이터사이 거리 계산
         dist = cal_dist(data, train)
         dists.append((dist,label))
 
-    dists.sort(key=lambda x: x[0])
+    dists.sort(key=lambda x: x[0])# 가까운 데이터 k개만 추출
     k_neighbors = dists[:k]
 
 
     for label in labels:
         count_label[label] = 0
 
-    for _, neighbor_label in k_neighbors:
+    for _, neighbor_label in k_neighbors:# 가까운 데이터의 클래스 세기
         count_label[neighbor_label] +=1
 
-    predict = max(count_label, key=count_label.get)
+    predict = max(count_label, key=count_label.get)# 가장 많은 클래스로 분류
     print("count_label:", count_label)
     print("predict:", predict)
     drawResult(X_train,y_train,data,predict)

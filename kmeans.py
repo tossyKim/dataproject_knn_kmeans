@@ -45,7 +45,6 @@ def kmeans(X, k, max_iter):
                 distance = cal_dist(x,centroid)
                 distances.append(distance)
 
-            # distances = [cal_dist(x, centroid) for centroid in centroids]
             cluster_idx = distances.index(min(distances))
             clusters[cluster_idx].append(x)
 
