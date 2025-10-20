@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from keras.src.ops import shape
 from sklearn.datasets import load_iris
 import math
 import numpy as np
@@ -49,10 +48,10 @@ def clustering(X, k):
         index1, index2 = min_key
 
         new_cluster = clusters[index1] + clusters[index2]#거리가 가장 짧은 데이터끼리 합치기
-        print(clusters[index1])
-        print(clusters[index2])
-        print(new_cluster)
-        print("=================")
+        # print(clusters[index1])
+        # print(clusters[index2])
+        # print(new_cluster)
+        # print("=================")
         clusters.append(new_cluster)
 
         # #합친 데이터 원본은 삭제 (큰 인덱스부터)
