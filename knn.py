@@ -45,27 +45,39 @@ def knn_predict(X_train, y_train, k, data):
 
 def drawResult(X_train, y_train, data, predict):
     colors = ['red', 'green', 'blue']
-    feature_indices = [0, 1, 2, 3]
-    pairs = []
+    X_train = np.array(X_train)
+    n_features = X_train.shape[1]
 
-    # 모든 조합 생성
-    for i in range(len(feature_indices)):
-        for j in range(i + 1, len(feature_indices)):
-            pairs.append((i, j))
+    # feature 쌍 생성
+    pairs = [(i, j) for i in range(n_features) for j in range(i + 1, n_features)]
+    n_pairs = len(pairs)
 
-    fig, axes = plt.subplots(2, 3, figsize=(18, 12))
-    axes = axes.flatten()
+    # subplot 크기 동적 계산
+    n_cols = min(3, n_pairs)
+    n_rows = (n_pairs + n_cols - 1) // n_cols
 
+    # 그래프 기본 설정
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(6 * n_cols, 5 * n_rows))
+    fig.suptitle("KNN", fontsize=20, fontweight='bold')
+    axes = np.array(axes).reshape(-1)
+
+    # 각 feature 쌍별 시각화
     for idx, (i, j) in enumerate(pairs):
         ax = axes[idx]
+        # 학습 데이터
         for x, y in zip(X_train, y_train):
             ax.scatter(x[i], x[j], color=colors[y], alpha=0.5)
-        # 예측 데이터 표시
-        ax.scatter(data[i], data[j], color=colors[predict], marker='X', s=150, label=f'Predict: {predict}')
+        # 예측 데이터
+        ax.scatter(data[i], data[j], color=colors[predict], marker='X', s=150,
+                   edgecolor='black', label=f'Predict: {predict}')
         ax.set_xlabel(f'Feature {i}')
         ax.set_ylabel(f'Feature {j}')
         ax.set_title(f'Feature {i} vs Feature {j}')
         ax.legend()
+
+    # 남는 subplot 제거
+    for ax in axes[n_pairs:]:
+        fig.delaxes(ax)
 
     plt.tight_layout()
     plt.show()

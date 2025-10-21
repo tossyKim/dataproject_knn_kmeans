@@ -83,6 +83,7 @@ def drawKMeans(X, clusters, centroids):
     n_cols = min(3, n_pairs)
     n_rows = (n_pairs + n_cols - 1) // n_cols
     fig, axes = plt.subplots(n_rows, n_cols, figsize=(6*n_cols, 5*n_rows))
+    fig.suptitle("K-means", fontsize=20, fontweight='bold')
     axes = np.array(axes).reshape(-1)
 
     for idx, (i, j) in enumerate(pairs):
